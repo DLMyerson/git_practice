@@ -1,3 +1,4 @@
+# List of destinations
 destinations = [
   'Paris, France',
   'Shanghai, China',
@@ -6,29 +7,21 @@ destinations = [
   'Cairo, Egypt'
   ]
 
-test_traveler = ['Erin Wilkes', 'Shanghai, China', ['historical site', 'art']]
-
-destinations = [
-  'Paris, France',
-  'Shanghai, China',
-  'Los Angeles, USA',
-  'São Paulo, Brazil',
-  'Cairo, Egypt'
-  ]
-
-test_traveler = ['Erin Wilkes', 'Shanghai, China', ['historical site', 'art']]
-
+# Retrives the index number of the destination in destinations list
 def get_destination_index(destination):
   destination_index = destinations.index(destination)
   return destination_index
 
+# Uses get_destination_index to retrieve the index number for the traveler destination
 def get_traveler_location(traveler):
   traveler_destination = traveler[1]
   traveler_destination_index = get_destination_index(traveler_destination)
   return traveler_destination_index
 
+# Creates empty list to later fill with attractions in the destination
 attractions = [[] for i in range(len(destinations))]
 
+# Creates function for adding attractions to destinations
 def add_attraction(destination, attraction):
   try:
     destination_index = get_destination_index(destination)
@@ -37,7 +30,8 @@ def add_attraction(destination, attraction):
     return
   except:
     return
-  
+
+# Creates several sample attractions using add_attraction  
 add_attraction('Los Angeles, USA', ['Venice Beach', ['beach']])
 add_attraction("Paris, France", ["the Louvre", ["art", "museum"]])
 add_attraction("Paris, France", ["Arc de Triomphe", ["historical site", "monument"]])
@@ -50,6 +44,7 @@ add_attraction("São Paulo, Brazil", ["Pátio do Colégio", ["historical site"]]
 add_attraction("Cairo, Egypt", ["Pyramids of Giza", ["monument", "historical site"]])
 add_attraction("Cairo, Egypt", ["Egyptian Museum", ["museum"]])
 
+# Defines function for matching interests with destinations
 def find_attractions(destination, interests):
   destination_index = get_destination_index(destination)
   attractions_in_city = attractions[destination_index]
@@ -62,5 +57,12 @@ def find_attractions(destination, interests):
         attractions_with_interest.append(possible_attraction[0])
   return attractions_with_interest
 
-la_art = find_attractions('Los Angeles, USA', ['art'])
-print(la_art)
+# Uses find_attractions to print results specific for a traveler
+def get_attractions_for_traveler(traveler):
+  traveler_destination = traveler[1]
+  traveler_interests = traveler[2]
+  traveler_attractions = find_attractions(traveler_destination, traveler_interests)
+  interests_string = f"Hi {traveler[0]}, we think you'll like these places around {traveler_destination}: "
+  for attraction in traveler_attractions:
+    interests_string += attraction + ", "
+  return interests_string[:-2]
